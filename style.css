@@ -1,8 +1,12 @@
 .image-container {
   margin: auto;
-  width: 600px;
+  width: 500px;
 }
 
 .image-container canvas {
+  width: 100%;
+}
+
+#rgb-image-container canvas {
   width: 100%;
 }
