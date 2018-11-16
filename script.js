@@ -72,48 +72,49 @@ function PixelParser(canvas) {
         }
     }
 }
-DrawNewImage();
+
 function DrawNewImage() {
-    const canvRGB = document.createElement('canvas');
-    const ctx = canvRGB.getContext('2d');
-    // canvRGB.width = pixelParser.getSize()[0]*3;
-    // canvRGB.height = pixelParser.getSize()[1];
-    canvasContainer.appendChild(canvRGB);
+    const newCanvas = document.createElement('canvas');
+    const ctx = newCanvas.getContext('2d');
+    const [canvasWidth, canvasHeight] = pixelParser.getSize();
 
+    newCanvas.width = canvasWidth;
+    newCanvas.height = canvasHeight;
 
+    canvasContainer.appendChild(newCanvas);
 
     // return {
     //     drawR: function() {
-    //         const canvasData = ctx.getImageData(0, 0, pixelParser.getSize()[0], canvRGB.height);
+    //         const canvasData = ctx.getImageData(0, 0, pixelParser.getSize()[0], newCanvas.height);
     //         const r = pixelParser.addContext().getR();
     //
     //         for (let i = 0; i < canvasData.data.length; i++) {
     //             canvasData.data[i] = r[i];
     //         }
     //
-    //         ctx.putImageData(canvasData, 0, 0, 0, 0, canvRGB.width, canvRGB.height);
+    //         ctx.putImageData(canvasData, 0, 0, 0, 0, newCanvas.width, newCanvas.height);
     //     },
     //     drawG: function() {
     //         const ctx = this.addCanvas();
-    //         const canvasData = ctx.getImageData(pixelParser.getSize()[0], 0, pixelParser.getSize()[0], canvRGB.height);
+    //         const canvasData = ctx.getImageData(pixelParser.getSize()[0], 0, pixelParser.getSize()[0], newCanvas.height);
     //         const g = pixelParser.addContext().getG();
     //
     //         for (let i = 0; i < canvasData.data.length; i++) {
     //             canvasData.data[i] = g[i];
     //         }
     //
-    //         ctx.putImageData(canvasData, pixelParser.getSize()[0], 0, 0, 0, canvRGB.width, canvRGB.height);
+    //         ctx.putImageData(canvasData, pixelParser.getSize()[0], 0, 0, 0, newCanvas.width, newCanvas.height);
     //     },
     //     drawB: function() {
     //         const ctx = this.addCanvas();
-    //         const canvasData = ctx.getImageData(pixelParser.getSize()[0]*2, 0, pixelParser.getSize()[0], canvRGB.height);
+    //         const canvasData = ctx.getImageData(pixelParser.getSize()[0]*2, 0, pixelParser.getSize()[0], newCanvas.height);
     //         const b = pixelParser.addContext().getB();
     //
     //         for (let i = 0; i < canvasData.data.length; i++) {
     //             canvasData.data[i] = b[i];
     //         }
     //
-    //         ctx.putImageData(canvasData, pixelParser.getSize()[0]*2, 0, 0, 0, pixelParser.getSize()[0], canvRGB.height);
+    //         ctx.putImageData(canvasData, pixelParser.getSize()[0]*2, 0, 0, 0, pixelParser.getSize()[0], newCanvas.height);
     //     }
     // }
 }
@@ -121,8 +122,23 @@ function DrawNewImage() {
 // const drawImage = new DrawNewImage();
 
 function R() {
+    const canvRGB = document.createElement('canvas');
+    const [canvasWidth, canvasHeight] = pixelParser.getSize();
+
+    canvRGB.width = canvasWidth;
+    canvRGB.height = canvasHeight;
+    const ctx = canvRGB.getContext('2d');
+    canvasContainer.appendChild(canvRGB);
+
     pixelParser.getRGB().then((rgb) => {
-        console.log(rgb);
+        const canvasData = ctx.getImageData(0, 0, pixelParser.getSize()[0], canvRGB.height);
+        const r = rgb.red;
+
+        for (let i = 0; i < canvasData.data.length; i++) {
+            canvasData.data[i] = r[i];
+        }
+
+        ctx.putImageData(canvasData, 0, 0, 0, 0, canvRGB.width, canvRGB.height);
     });
 }
 
